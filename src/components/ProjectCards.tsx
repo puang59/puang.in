@@ -1,0 +1,29 @@
+import { projectList } from "./Projects";
+
+export function ProjectCards() {
+  return (
+    <div className="my-10">
+      {projectList.map((project) => (
+        <div
+          key={project.title}
+          className="mt-5 border border-gray-800 hover:border-amber-500 transition-all duration-500 ease-in-out p-10 group"
+        >
+          <a
+            href={project.link}
+            className="transition-all duration-300 ease-in-out group-hover:text-amber-500"
+          >
+            <p className="text-xl font-bold">{project.title}</p>
+
+            <p className="text-gray-400 mt-5">{project.description}</p>
+
+            <p className="text-sm text-gray-500 mt-2">
+              {project.technologies.map((tech) => (
+                <span key={tech}>* {tech}</span>
+              ))}
+            </p>
+          </a>
+        </div>
+      ))}
+    </div>
+  );
+}
