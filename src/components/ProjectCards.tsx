@@ -14,9 +14,9 @@ export function ProjectCards() {
           >
             <p className="text-xl font-bold">{project.title}</p>
 
-            <p className="text-gray-400 mt-5">{project.description}</p>
+            <p className="text-gray-400 text-sm mt-5">{project.description}</p>
 
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-gray-500 mt-4">
               {project.technologies.map((tech) => (
                 <span key={tech}>* {tech}</span>
               ))}

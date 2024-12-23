@@ -13,6 +13,9 @@ export default {
         background: "#0f0f0f",
         foreground: "var(--foreground)",
       },
+      backgroundOpacity: {
+        15: "0.15",
+      },
     },
   },
   plugins: [],

@@ -4,7 +4,8 @@ import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import Link from "next/link";
-import { codeToHtml } from "shiki";
+import { Metadata } from "next";
+import BackButton from "@/components/BackButton";
 
 const components = {
   h1: (props: any) => <h1 className="text-3xl font-bold my-6" {...props} />,
@@ -29,7 +30,10 @@ const components = {
     );
   },
   a: (props: any) => (
-    <Link {...props} className="text-blue-500 hover:text-blue-600 underline" />
+    <Link
+      {...props}
+      className="text-amber-500 hover:text-amber-600 underline"
+    />
   ),
   pre: (props: any) => (
     <pre className="bg-zinc-900 text-white p-4 rounded-lg my-6 overflow-x-auto">
@@ -43,7 +47,7 @@ const components = {
 
 async function getMdxContent(slug: string) {
   const postsDirectory = path.join(process.cwd(), "posts");
-  const filePath = path.join(postsDirectory, `${slug}.mdx`);
+  const filePath = path.join(postsDirectory, `${slug}.md`);
 
   try {
     const fileContent = fs.readFileSync(filePath, "utf8");
@@ -54,6 +58,32 @@ async function getMdxContent(slug: string) {
   }
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const { frontmatter } = await getMdxContent(params.slug);
+
+  return {
+    title: frontmatter.title,
+    description: frontmatter.description,
+    openGraph: {
+      title: frontmatter.title,
+      description: frontmatter.description,
+      url: `https://puang.in/blog/${params.slug}`,
+      images: [
+        {
+          url: frontmatter.image || "/default-og-image.png",
+          width: 800,
+          height: 600,
+          alt: frontmatter.title,
+        },
+      ],
+    },
+  };
+}
+
 export default async function BlogPost({
   params,
 }: {
@@ -62,7 +92,8 @@ export default async function BlogPost({
   const { content, frontmatter } = await getMdxContent(params.slug);
 
   return (
-    <article className="max-w-4xl mx-auto px-6 py-12 font-mono text-md">
+    <article className="max-w-4xl mx-auto px-6 font-mono text-md">
+      <BackButton />
       <header className="mb-8">
         <h1 className="text-4xl font-bold">{frontmatter.title}</h1>
         <time className="text-gray-500 mt-2 block">
@@ -86,6 +117,6 @@ export function generateStaticParams() {
   const filenames = fs.readdirSync(postsDirectory);
 
   return filenames.map((filename) => ({
-    slug: filename.replace(/\.mdx$/, ""),
+    slug: filename.replace(/\.md$/, ""),
   }));
 }

@@ -5,7 +5,14 @@ const nextConfig: NextConfig = {
   /* Add your Next.js config options here */
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"], // Add support for MDX pages
   images: {
-    domains: ["github.com", "raw.githubusercontent.com"],
+    domains: [
+      "github.com",
+      "raw.githubusercontent.com",
+      "i.imgur.com",
+      "imgur.com",
+      "cdn.discordapp.com",
+      "media.discordapp.net",
+    ],
   },
 };
 

@@ -1,5 +1,4 @@
 import { ProjectCards } from "@/components/ProjectCards";
-import { projectList } from "@/components/Projects";
 import { SideBar } from "@/components/SideBar";
 
 export default function Projects() {

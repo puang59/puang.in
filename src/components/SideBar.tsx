@@ -12,15 +12,18 @@ export function SideBar() {
     },
     {
       name: "Blogs",
-      path: "/blogs",
+      path: "/blog",
     },
     {
       name: "Socials",
-      path: "/socials",
+      path: "/",
       children: [
-        { name: "x.com", path: "/socials/twitter" },
-        { name: "github", path: "/socials/github" },
-        { name: "linkedin", path: "/socials/github" },
+        { name: "x.com", path: "https://x.com/puangg59" },
+        { name: "github", path: "https://github.com/puang59" },
+        {
+          name: "linkedin",
+          path: "https://www.linkedin.com/in/karan-kumar-a54127151/",
+        },
       ],
     },
   ];
@@ -55,7 +58,7 @@ export function SideBar() {
   );
 
   return (
-    <div className="w-full md:w-80 p-4 mt-8 md:mt-0">
+    <div className="w-full md:w-80 p-4 mt-8 md:mt-0 font-mono">
       <h1 className="text-2xl font-bold mb-4">
         {" "}
         <span className="text-amber-500">~</span> navigation

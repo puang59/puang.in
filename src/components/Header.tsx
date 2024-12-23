@@ -17,9 +17,16 @@ export function Header() {
       </div>
       <p className="text-gray-400 my-5 leading-relaxed">
         a 19 y/o undergraduate student majoring in computer science. i'm a big
-        enthusiast of all things old school and retro. i find joy in learning
-        low level technology and delving into new tech. additionally, i have a
-        deep love for media production and working with cameras
+        enthusiast of all things old school and&nbsp;
+        <a
+          href="https://puang.in/retro"
+          className="text-amber-500 hover:text-amber-600"
+        >
+          retro
+        </a>
+        . i find joy in learning low level technology and delving into new tech.
+        additionally, i have a deep love for media production and working with
+        cameras
       </p>
     </div>
   );
