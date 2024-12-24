@@ -4,8 +4,9 @@ import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import Link from "next/link";
-import { Metadata } from "next";
 import BackButton from "@/components/BackButton";
+import { Metadata } from "next";
+import { notFound } from "next/navigation"; // For handling non-existent posts
 import { getPostBySlug } from "@/utils/blog";
 
 const components = {
@@ -64,15 +65,16 @@ async function getMdxContent(slug: string) {
 }
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 };
 
 export async function generateMetadata({ params }: PageProps) {
-  const slug = (await params).slug;
-  const post = getPostBySlug(slug);
+  const post = getPostBySlug(params.slug);
   if (!post) {
     return;
   }
+
+  const publishedTime = formatDate(post.metadata.date);
 
   return {
     title: post.metadata.title,
@@ -80,6 +82,7 @@ export async function generateMetadata({ params }: PageProps) {
     openGraph: {
       title: post.metadata.title,
       description: post.metadata.description,
+      publishedTime,
       type: "article",
       url: `https://www.puang.in/blog/${post.slug}`,
       images: [
@@ -93,36 +96,56 @@ export async function generateMetadata({ params }: PageProps) {
       description: post.metadata.description,
       card: "summary_large_image",
       creator: "@puangg59",
-      images: [`https://www.puang.in/og/blog?title=${post.metadata.title}`],
+      images: [
+        `https://www.puang.in/og/blog?title=${post.metadata.title}&top=${publishedTime}`,
+      ],
     },
   };
 }
 
-export default async function BlogPost({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function BlogPost({ params }: PageProps) {
   const { content, frontmatter } = await getMdxContent(params.slug);
 
+  if (!content || !frontmatter) {
+    notFound();
+  }
+
   return (
-    <article className="max-w-4xl mx-auto px-6 font-mono text-md">
+    <section className="animate-fade-in-up max-w-4xl mx-auto px-6 font-mono text-md">
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: frontmatter.title,
+            datePublished: frontmatter.date,
+            dateModified: frontmatter.date,
+            description: frontmatter.description,
+            image: `https://www.puang.in/og/blog?title=${
+              frontmatter.title
+            }&top=${formatDate(frontmatter.date)}`,
+            url: `https://www.puang.in/blog/${params.slug}`,
+            author: {
+              "@type": "Person",
+              name: "Karan Kumar",
+            },
+          }),
+        }}
+      />
       <BackButton />
       <header className="mb-8">
         <h1 className="text-4xl font-bold">{frontmatter.title}</h1>
         <time className="text-gray-500 mt-2 block">
-          {new Date(frontmatter.date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          {formatDate(frontmatter.date)}
         </time>
       </header>
 
-      <div className="prose prose-lg dark:prose-invert max-w-none">
+      <article className="prose prose-lg dark:prose-invert max-w-none">
         <MDXRemote source={content} components={components} />
-      </div>
-    </article>
+      </article>
+    </section>
   );
 }
 
@@ -140,4 +163,12 @@ export function generateStaticParams() {
   return filenames.map((filename) => ({
     slug: filename.replace(/\.md$/, ""), // Remove .md extension
   }));
+}
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
