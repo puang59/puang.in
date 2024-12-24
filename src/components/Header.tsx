@@ -19,7 +19,7 @@ export function Header() {
         a 19 y/o undergraduate student majoring in computer science. i'm a big
         enthusiast of all things old school and&nbsp;
         <a
-          href="https://puang.in/retro"
+          href="https://retro.puang.in"
           className="text-amber-500 hover:text-amber-600"
         >
           retro
