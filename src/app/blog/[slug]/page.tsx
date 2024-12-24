@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import BackButton from "@/components/BackButton";
 import { Metadata } from "next";
-import { notFound } from "next/navigation"; // For handling non-existent posts
+import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/utils/blog";
 
 const components = {
@@ -26,7 +26,7 @@ const components = {
       );
     }
     return (
-      <p className="text-gray-400 my-6" {...props}>
+      <p className="text-gray-400 my-6 leading-8" {...props}>
         {children}
       </p>
     );
@@ -153,15 +153,11 @@ export function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filenames = fs
     .readdirSync(postsDirectory, { withFileTypes: true })
-    .filter(
-      (dirent) =>
-        dirent.isFile() && // Ensure it's a file
-        dirent.name.endsWith(".md") // Ensure it's a markdown file
-    )
+    .filter((dirent) => dirent.isFile() && dirent.name.endsWith(".md"))
     .map((dirent) => dirent.name);
 
   return filenames.map((filename) => ({
-    slug: filename.replace(/\.md$/, ""), // Remove .md extension
+    slug: filename.replace(/\.md$/, ""),
   }));
 }
 

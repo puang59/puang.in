@@ -10,7 +10,7 @@ export default function BlogLayout({
 }) {
   return (
     <div className={`min-h-screen ${inter.className}`}>
-      <main className="dark:text-gray-100 leading-8">{children}</main>
+      <main className="dark:text-gray-100">{children}</main>
     </div>
   );
 }

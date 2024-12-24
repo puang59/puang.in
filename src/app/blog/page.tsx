@@ -39,7 +39,7 @@ export default function Blogs() {
         <h1 className="text-3xl font-bold mb-10">
           <span className="text-amber-500">~</span> blogs
         </h1>
-        <ul className="space-y-6">
+        <ul>
           {blogs.map((blog) => (
             <li key={blog.slug} className="pb-4 group">
               <a
