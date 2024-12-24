@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { SideBar } from "@/components/SideBar";
+import { Metadata } from "next";
 
 type BlogPost = {
   slug: string;
@@ -65,3 +66,15 @@ export default function Blogs() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Blogs",
+  description: "Some of my writings about stuffs",
+  openGraph: {
+    images: [
+      {
+        url: "https://www.puang.in/og/home?title=blogs",
+      },
+    ],
+  },
+};

@@ -1,5 +1,6 @@
 import { ProjectCards } from "@/components/ProjectCards";
 import { SideBar } from "@/components/SideBar";
+import { Metadata } from "next";
 
 export default function Projects() {
   return (
@@ -16,3 +17,15 @@ export default function Projects() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "These are some projects I've worked on.",
+  openGraph: {
+    images: [
+      {
+        url: "https://www.puang.in/og/home?title=projects",
+      },
+    ],
+  },
+};

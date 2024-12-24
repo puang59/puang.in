@@ -35,6 +35,11 @@ export const metadata: Metadata = {
     "max-image-preview": "large",
     "max-snippet": -1,
   },
+  twitter: {
+    title: "Karan Kumar",
+    card: "summary_large_image",
+    creator: "@puangg59",
+  },
 };
 
 export default function RootLayout({

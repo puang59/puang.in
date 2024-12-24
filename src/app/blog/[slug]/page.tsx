@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import BackButton from "@/components/BackButton";
+import { getPostBySlug } from "@/utils/blog";
 
 const components = {
   h1: (props: any) => <h1 className="text-3xl font-bold my-6" {...props} />,
@@ -62,28 +63,37 @@ async function getMdxContent(slug: string) {
   }
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const { frontmatter } = await getMdxContent(params.slug);
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: PageProps) {
+  const slug = (await params).slug;
+  const post = getPostBySlug(slug);
+  if (!post) {
+    return;
+  }
 
   return {
-    title: frontmatter.title,
-    description: frontmatter.description,
+    title: post.metadata.title,
+    description: post.metadata.description,
     openGraph: {
-      title: frontmatter.title,
-      description: frontmatter.description,
-      url: `https://puang.in/blog/${params.slug}`,
+      title: post.metadata.title,
+      description: post.metadata.description,
+      type: "article",
+      url: `https://www.puang.in/blog/${post.slug}`,
       images: [
         {
-          url: frontmatter.image || "/default-og-image.png",
-          width: 800,
-          height: 600,
-          alt: frontmatter.title,
+          url: `https://www.puang.in/og/blog?title=${post.metadata.title}`,
         },
       ],
+    },
+    twitter: {
+      title: post.metadata.title,
+      description: post.metadata.description,
+      card: "summary_large_image",
+      creator: "@puangg59",
+      images: [`https://www.puang.in/og/blog?title=${post.metadata.title}`],
     },
   };
 }
