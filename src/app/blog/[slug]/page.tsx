@@ -49,12 +49,16 @@ async function getMdxContent(slug: string) {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filePath = path.join(postsDirectory, `${slug}.md`);
 
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`No post found for slug: ${slug}`);
+  }
+
   try {
     const fileContent = fs.readFileSync(filePath, "utf8");
     const { content, data } = matter(fileContent);
     return { content, frontmatter: data };
   } catch (error) {
-    throw new Error(`No post found for slug: ${slug}`);
+    throw new Error(`Error reading post for slug: ${slug}`);
   }
 }
 
@@ -114,9 +118,16 @@ export default async function BlogPost({
 
 export function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), "posts");
-  const filenames = fs.readdirSync(postsDirectory);
+  const filenames = fs
+    .readdirSync(postsDirectory, { withFileTypes: true })
+    .filter(
+      (dirent) =>
+        dirent.isFile() && // Ensure it's a file
+        dirent.name.endsWith(".md") // Ensure it's a markdown file
+    )
+    .map((dirent) => dirent.name);
 
   return filenames.map((filename) => ({
-    slug: filename.replace(/\.md$/, ""),
+    slug: filename.replace(/\.md$/, ""), // Remove .md extension
   }));
 }

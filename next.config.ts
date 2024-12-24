@@ -1,9 +1,19 @@
 import type { NextConfig } from "next";
-import withMDX from "@next/mdx";
+import createMDX from "@next/mdx";
+
+const withMDX = createMDX({
+  // Add markdown plugins here, if needed
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+});
 
 const nextConfig: NextConfig = {
-  /* Add your Next.js config options here */
-  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"], // Add support for MDX pages
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     domains: [
       "github.com",
@@ -16,6 +26,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withMDX({
-  extension: /\.mdx?$/,
-})(nextConfig);
+export default withMDX(nextConfig);

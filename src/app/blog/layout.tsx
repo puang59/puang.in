@@ -14,12 +14,3 @@ export default function BlogLayout({
     </div>
   );
 }
-
-// tailwind.config.js
-module.exports = {
-  content: ["./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [require("@tailwindcss/typography")],
-};

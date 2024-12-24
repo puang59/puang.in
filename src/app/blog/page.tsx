@@ -9,7 +9,7 @@ type BlogPost = {
   date: string;
 };
 
-export function Blogs() {
+export default function Blogs() {
   const postsDirectory = path.join(process.cwd(), "posts");
   const filenames = fs.readdirSync(postsDirectory);
 
@@ -65,5 +65,3 @@ export function Blogs() {
     </div>
   );
 }
-
-export default Blogs;
