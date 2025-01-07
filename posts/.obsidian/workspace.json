@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "51f772b2596a0e1e",
+        "id": "8ab5d9929c54b538",
         "type": "tabs",
         "children": [
           {
-            "id": "024dc4831e9c654c",
+            "id": "25f2bf8941043734",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -162,13 +162,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "024dc4831e9c654c",
+  "active": "25f2bf8941043734",
   "lastOpenFiles": [
+    "media-production.md",
     "emacs-workflow.md",
     "retro-website.md",
     "hello-website.md",
     "retro-website",
-    "media-production.md",
     "retro.md",
     "connect-obsidian.md",
     "2024-12-22.md",

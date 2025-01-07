@@ -34,7 +34,7 @@ export function BlogList() {
 
   return (
     <div className="mt-20">
-      <h1 className="text-2xl font-bold">
+      <h1 className="text-2xl text-white font-bold">
         <span className="text-amber-500">~</span> blogs{" "}
       </h1>
 

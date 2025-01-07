@@ -3,7 +3,7 @@ import { MapPin, BriefcaseBusiness } from "lucide-react";
 export function Header() {
   return (
     <div className="max-w-xl">
-      <h1 className="text-3xl font-bold">karan kumar</h1>
+      <h1 className="text-3xl font-bold text-white">karan kumar</h1>
 
       <div className="mt-4 text-gray-500">
         <MapPin className="w-5 h-5 text-gray-500 inline-block mr-2" />
