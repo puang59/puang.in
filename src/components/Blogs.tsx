@@ -33,7 +33,7 @@ export function BlogList() {
   blogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
-    <div className="mt-20">
+    <div className="text-white mt-20">
       <h1 className="text-2xl text-white font-bold">
         <span className="text-amber-500">~</span> blogs{" "}
       </h1>

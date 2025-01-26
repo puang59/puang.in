@@ -20,7 +20,7 @@ const experience = [
 
 export function Experience() {
   return (
-    <div className="mt-20">
+    <div className="text-white mt-20">
       <h1 className="text-2xl font-bold text-white">
         <span className="text-amber-500">~</span> experience{" "}
       </h1>

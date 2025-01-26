@@ -33,8 +33,8 @@ export const projectList = [
 
 export function Projects() {
   return (
-    <div className="mt-20">
-      <h1 className="text-white text-2xl font-bold">
+    <div className="text-white mt-20">
+      <h1 className="text-2xl font-bold">
         <span className="text-amber-500">~</span> projects{" "}
       </h1>
       <div className="my-10">

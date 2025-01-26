@@ -2,7 +2,7 @@ import { projectList } from "./Projects";
 
 export function ProjectCards() {
   return (
-    <div className="my-10">
+    <div className="text-white my-10">
       {projectList.map((project) => (
         <div
           key={project.title}
