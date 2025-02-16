@@ -1,68 +1,7 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import Image from "next/image";
-import Link from "next/link";
-import BackButton from "@/components/BackButton";
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { MDX } from "./mdx";
 import { getPostBySlug } from "@/utils/blog";
-
-const components = {
-  h1: (props: any) => <h1 className="text-3xl font-bold my-6" {...props} />,
-  h2: (props: any) => <h2 className="text-2xl font-bold my-5" {...props} />,
-  h3: (props: any) => <h3 className="text-xl font-bold my-4" {...props} />,
-  p: ({ children, ...props }: any) => {
-    if (children && typeof children === "object" && children.type === "img") {
-      return (
-        <Image
-          src={children.props.src}
-          alt={children.props.alt || ""}
-          width={800}
-          height={400}
-          className="my-8 rounded-lg"
-        />
-      );
-    }
-    return (
-      <p className="text-gray-400 my-6 leading-8" {...props}>
-        {children}
-      </p>
-    );
-  },
-  a: (props: any) => (
-    <Link
-      {...props}
-      className="text-amber-500 hover:text-amber-600 underline"
-    />
-  ),
-  pre: (props: any) => (
-    <pre className="bg-zinc-900 text-white p-4 rounded-lg my-6 overflow-x-auto">
-      {props.children}
-    </pre>
-  ),
-  code: (props: any) => (
-    <code className="bg-zinc-800 px-1 rounded" {...props} />
-  ),
-};
-
-async function getMdxContent(slug: string) {
-  const postsDirectory = path.join(process.cwd(), "posts");
-  const filePath = path.join(postsDirectory, `${slug}.md`);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error(`No post found for slug: ${slug}`);
-  }
-
-  try {
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const { content, data } = matter(fileContent);
-    return { content, frontmatter: data };
-  } catch (error) {
-    throw new Error(`Error reading post for slug: ${slug}`);
-  }
-}
+import BackButton from "@/components/BackButton";
 
 type PageProps = {
   params: { slug: string };
@@ -103,10 +42,9 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-export default async function BlogPost({ params }: PageProps) {
-  const { content, frontmatter } = await getMdxContent(params.slug);
-
-  if (!content || !frontmatter) {
+export default async function Post({ params }: PageProps) {
+  const post = getPostBySlug(params.slug);
+  if (!post) {
     notFound();
   }
 
@@ -119,14 +57,14 @@ export default async function BlogPost({ params }: PageProps) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
-            headline: frontmatter.title,
-            datePublished: frontmatter.date,
-            dateModified: frontmatter.date,
-            description: frontmatter.description,
+            headline: post.metadata.title,
+            datePublished: post.metadata.date,
+            dateModified: post.metadata.date,
+            description: post.metadata.description,
             image: `https://www.puang.in/og/blog?title=${
-              frontmatter.title
-            }&top=${formatDate(frontmatter.date)}`,
-            url: `https://www.puang.in/blog/${params.slug}`,
+              post.metadata.title
+            }&top=${formatDate(post.metadata.date)}`,
+            url: `https://www.puang.in/blog/${post.slug}`,
             author: {
               "@type": "Person",
               name: "Karan Kumar",
@@ -135,30 +73,19 @@ export default async function BlogPost({ params }: PageProps) {
         }}
       />
       <BackButton />
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold">{frontmatter.title}</h1>
+      <h1 className="text-4xl font-bold mb-4 mt-2 text-white">
+        {post.metadata.title}
+      </h1>
+      <div className="mb-8 flex items-center justify-between text-sm text-gray-400">
         <time className="text-gray-500 mt-2 block">
-          {formatDate(frontmatter.date)}
+          {formatDate(post.metadata.date)}
         </time>
-      </header>
-
-      <article className="prose prose-lg dark:prose-invert max-w-none">
-        <MDXRemote source={content} components={components} />
+      </div>
+      <article className="prose prose-lg dark:prose-invert max-w-none text-gray-400 my-6 leading-10">
+        <MDX source={post.content} />
       </article>
     </section>
   );
-}
-
-export function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), "posts");
-  const filenames = fs
-    .readdirSync(postsDirectory, { withFileTypes: true })
-    .filter((dirent) => dirent.isFile() && dirent.name.endsWith(".md"))
-    .map((dirent) => dirent.name);
-
-  return filenames.map((filename) => ({
-    slug: filename.replace(/\.md$/, ""),
-  }));
 }
 
 function formatDate(date: string) {

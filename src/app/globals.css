@@ -19,3 +19,48 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+pre {
+  overflow-x: auto;
+  white-space: pre;
+  max-width: 100%;
+  border: 1px solid #262626;
+  background-color: #111;
+  margin: 1rem 0;
+  border-radius: 0;
+  padding: 1rem;
+}
+
+p code {
+  background-color: #27272a;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+li code {
+  background-color: #27272a;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+h2 code {
+  background-color: #27272a;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .example {
+    padding-left: 100px;
+  }
+}
+
+.quote {
+  border-left: 5px solid #262626;
+  background-color: #262626;
+  padding: 1rem;
+  margin: 1rem 0;
+}

@@ -55,8 +55,6 @@ And voila, your `newfile.html` is pushed to your VPS. Since we have autoindex en
 to that file. So, you just have to access it using `http://<your_website>.<tld>/files/newfile.html` — in my case, `https://puang.in/files/newfile.html`.
 Now, simply share your notes with your friends :)
 
----
-
 Now, you might be thinking that whenever you create a quick org file with the keybind `C-c o`, it will always have the same name, `newFile.org`, and will
 be exported as `newfile.html` every time, right? So, when I push again and again, won't my previous notes be overwritten? Also, typing the `scp` command
 again and again is very tedious — who would even waste their time doing so?
@@ -86,8 +84,6 @@ Usage:
 
 and BAMM!!, I have my quick org note file served directly at `https://puang.in/files/emacsTest.html`
 
----
-
 ### So basically
 
 - Launch emacs
@@ -106,13 +102,11 @@ your notes then you can easily write a simple css file for it because at the end
 you are exporting your org file is a plain HTML text right?
 To link your css file with your org file, you can easily put this on top of your org file when editing:
 
-```org
+```js
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="your_css.css" />
 ```
 
 If you dont want to write your own css, then you can use pre-written once
 Checkout: [org-html-themes](https://github.com/fniessen/org-html-themes?tab=readme-ov-file)
-
----
 
 If you want to know more about my setup, you can DM me on X - [@puangg59](https://twitter.com/puangg59)

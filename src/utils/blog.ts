@@ -21,7 +21,18 @@ export function getPosts(): MDXFileData[] {
 }
 
 export function getPostBySlug(slug: string): MDXFileData | null {
-  return getPosts().find((post) => post.slug === slug) ?? null;
+  console.log("Fetching post for slug:", slug);
+
+  const posts = getPosts();
+  console.log(
+    "Available posts:",
+    posts.map((p) => p.slug)
+  );
+
+  const foundPost = posts.find((post) => post.slug === slug) ?? null;
+  console.log("Found post:", foundPost);
+
+  return foundPost;
 }
 
 function parseFrontmatter(fileContent: string): FrontmatterParseResult {
@@ -45,7 +56,7 @@ function parseFrontmatter(fileContent: string): FrontmatterParseResult {
   frontmatterLines.forEach((line) => {
     const [key, ...values] = line.split(": ");
     let value = values.join(": ").trim();
-    value = value.replace(/^['"](.*)['"]$/, "$1"); // Remove quotes
+    value = value.replace(/^['"](.*)['"]$/, "$1");
     if (key && value) {
       metadata[key.trim() as keyof Metadata] = value;
     }
@@ -55,7 +66,7 @@ function parseFrontmatter(fileContent: string): FrontmatterParseResult {
 }
 
 function getMDXFiles(dir: string): string[] {
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
+  return fs.readdirSync(dir).filter((file) => path.extname(file) === ".md");
 }
 
 function readMDXFile(filePath: string): FrontmatterParseResult {
