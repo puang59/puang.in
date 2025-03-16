@@ -8,11 +8,11 @@ date: 2025-02-14
 
 Ever wondered how websites actually work under the hood? You type a URL, hit enter, and boom a webpage appears. But what’s really happening behind the scenes? Well, at the heart of it all is something called an **HTTP server**, and today, we're going to **build one from scratch using C**.
 
-Now, before you panic and think, _“C? Isn’t that the scary low-level language from the 70s?”_ - relax. I promise it’s not that bad. 
+Now, before you panic and think, _“C? Isn’t that the scary low-level language from the 70s?”_ - relax. I promise it’s not that bad.
 <br/>
 I'll assume you just saw the term **HTTP Server** and move forward with that assumption.
 
-Before we dive right into the code, I want to explain few concepts that we are going to use in our code so that you don't feel lost and confused while reading. 
+Before we dive right into the code, I want to explain few concepts that we are going to use in our code so that you don't feel lost and confused while reading.
 
 I promise this is going to be an interesting one.
 <br/>
@@ -62,7 +62,7 @@ Let’s connect the dots! When you type `puang.in` into your browser:
 -  The response is sent back to your browser.
 - Your browser **renders** the response, and you see the webpage.
 
-All of this happens **within milliseconds**, and that’s what makes the web feel so seamless. 
+All of this happens **within milliseconds**, and that’s what makes the web feel so seamless.
 <br/>
 
 ---
@@ -72,21 +72,21 @@ All of this happens **within milliseconds**, and that’s what makes the web fee
 ## Headers Files
 Before we dive in, I'll ask you to include all the necessary header file imports to prevent LSP from throwing annoying warnings. I know this list might seem overwhelming at first, but as we progress, I'll point out which functions come from which headers. This way, it'll be easier to keep track, and by the end, you'll see a concise list of the features we used and their corresponding headers.
 ```c
-#include <arpa/inet.h> 
-#include <ctype.h> 
-#include <dirent.h> 
-#include <errno.h> 
-#include <fcntl.h> 
-#include <netinet/in.h> 
-#include <pthread.h> 
-#include <regex.h> 
-#include <stdbool.h> 
-#include <stdio.h> 
-#include <stdlib.h> 
-#include <string.h> 
-#include <sys/socket.h> 
-#include <sys/stat.h> 
-#include <sys/types.h> 
+#include <arpa/inet.h>
+#include <ctype.h>
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <regex.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 ```
 
@@ -110,7 +110,7 @@ Now lets define constants that we are going to use in our entire code base
 
 ## Understanding `main()`
 
-Now comes our `main()` function which basically sets up the server by creating a socket, configuring it with an IP address and port, and binding it to the system. It then listens for incoming connections and continuously accepts clients. 
+Now comes our `main()` function which basically sets up the server by creating a socket, configuring it with an IP address and port, and binding it to the system. It then listens for incoming connections and continuously accepts clients.
 
 Each client is handled in a separate thread to allow multiple connections simultaneously. This ensures the server can process multiple requests efficiently while running indefinitely.
 <br/>
@@ -210,8 +210,8 @@ Okay now comes our **infinite while** loop of our HTTP server,  which continuous
 while(1) {
 ```
 ```c
-	struct sockaddr_in client_addr; 
-	socklen_t client_addr_len = sizeof(client_addr); 
+	struct sockaddr_in client_addr;
+	socklen_t client_addr_len = sizeof(client_addr);
 	int *client_fd = malloc(sizeof(int));
 
     // accepting incoming client connection
@@ -272,7 +272,7 @@ pthread_detach(thread_id);
 <br/>
 ## Understanding `handle_client()`
 
-Now lets understand the `handle_client()` function. It helps to process an HTTP request from a client, extracts the requested file name, determines its type (extension), generates an HTTP response, and sends it back to the client. 
+Now lets understand the `handle_client()` function. It helps to process an HTTP request from a client, extracts the requested file name, determines its type (extension), generates an HTTP response, and sends it back to the client.
 
 ```c
 void *handle_client(void *arg) {
@@ -406,7 +406,7 @@ matches[1].rm_eo = 22;  // end (space before "HTTP/1.1")
 ```
 
 ```c
-buffer[matches[1].rm_eo] = '\0';  
+buffer[matches[1].rm_eo] = '\0';
 // "GET /hello%20world.txt\0HTTP/1.1"
 ```
 So now, `"hello%20world.txt"` is a valid C string inside `buffer`.
@@ -464,9 +464,9 @@ We now free all the resources and close our client connection.
 
 Now we'll go through `build_http_response()` function and see how do we actually create a response that we'll send to back to the client.
 ```c
-void build_http_response(const char *file_name, 
-                        const char *file_ext, 
-                        char *response, 
+void build_http_response(const char *file_name,
+                        const char *file_ext,
+                        char *response,
                         size_t *response_len) {
 
     const char *mime_type = get_mime_type(file_ext);
@@ -497,8 +497,8 @@ void build_http_response(const char *file_name,
     *response_len += strlen(header);
 
     ssize_t bytes_read;
-    while ((bytes_read = read(file_fd, 
-                            response + *response_len, 
+    while ((bytes_read = read(file_fd,
+                            response + *response_len,
                             BUFFER_SIZE - *response_len)) > 0) {
         *response_len += bytes_read;
     }
@@ -522,8 +522,8 @@ const char *mime_type = get_mime_type(file_ext);
 ### <u>HTTP Response Header Example:</u>
 Now before moving ahead, lets see how a HTTP response header actually looks like:
 ```c
-HTTP/1.1 status_code status_message\r\n 
-Content-Type: mime_type\r\n 
+HTTP/1.1 status_code status_message\r\n
+Content-Type: mime_type\r\n
 Other-Headers: values\r\n
 \r\n
 ```
@@ -591,8 +591,8 @@ memcpy(response, header, strlen(header));
 - Copies the header into `response` using [`memcpy()`](https://www.tutorialspoint.com/c_standard_library/c_function_memcpy.htm) and updates `response_len` to track the total size.
 ```c
 	ssize_t bytes_read;
-	while ((bytes_read = read(file_fd, 
-	                        response + *response_len, 
+	while ((bytes_read = read(file_fd,
+	                        response + *response_len,
 	                        BUFFER_SIZE - *response_len)) > 0) {
 	    *response_len += bytes_read;
 	}
@@ -603,16 +603,16 @@ This loop reads the requested file in chunks and appends its content to the `res
 Lets understand whats going on with the code:
 
 - `read(file_fd, response + *response_len, BUFFER_SIZE - *response_len)`:
-    
+
     - Reads up to `(BUFFER_SIZE - *response_len)` bytes from `file_fd`.
     - Stores the data **at the end** of the response buffer (`response + *response_len`).
     - `read()` returns the number of bytes read (`bytes_read`).
 - **If `read()` succeeds (`bytes_read > 0`)**:
-    
+
     - We update `*response_len` to track the total response size.
     - The loop continues to read more data until the entire file is read.
 - **When the file is fully read (`read()` returns 0)**:
-    
+
     - The loop stops, meaning the response buffer now contains both the HTTP headers and the file content.
 
 We do the cleaning now 🧹
@@ -623,7 +623,7 @@ close(file_fd); // closes the file to avoide resource leak
 <br/>
 
 ---
-## ⛳ Checkpoint 
+## ⛳ Checkpoint
 ***Well, if you've made it this far, give yourself a pat on the back!***
 <br/>
 We've covered the core of our HTTP server, and the hardest part is behind us. Not too bad, right?
@@ -650,7 +650,7 @@ char *url_decode(const char *src) {
     size_t src_len = strlen(src);
     char *decoded = malloc(src_len + 1);
     size_t decoded_len = 0;
-    
+
     for (size_t i = 0; i < src_len; i++) {
         if (src[i] == '%' && i + 2 < src_len) {
             int hex_val;
@@ -775,7 +775,7 @@ Now lets test it out. Before we do, create some files in the same directory like
 
 (I added few `printf` in `handle_client()` function to debug and monitor my requests and response. If you want to do so as well, you can go to the github repo I linked at the end of the blog and copy from there)
 
-Now once you have you files ready, you can compile your c code using 
+Now once you have you files ready, you can compile your c code using
 ```bash
 gcc -o http_server http_server.c
 ```
@@ -789,7 +789,7 @@ If you see this then congrats, your http server is up and running. To test it, v
 
 <img src="https://i.imgur.com/JRjn0WB.png" width="600" />
 <img src="https://i.imgur.com/0oEYVvg.png" width="600"/>
-Cool right? now with the `printf` statement, you should be seeing all the response and requests on your terminal 
+Cool right? now with the `printf` statement, you should be seeing all the response and requests on your terminal
 <img src="https://i.imgur.com/po8DrRJ.png" width="600"/>
 <br/>
 <img src="https://i.imgur.com/mvmXnZ0.png" width="600"/>
@@ -816,31 +816,31 @@ I'm sorry, im as excited as you are seeing it work lol
 Now as promised, here is a list of tools we used in the entire code base and what header files they come from:
 
 - **Networking (`sys/socket.h`, `netinet/in.h`, `arpa/inet.h`)**
-    
+
     - Used to create, bind, listen, and accept client connections over TCP.
     - `socket()`, `bind()`, `listen()`, `accept()`, `send()`, `recv()`.
 - **File Handling (`fcntl.h`, `sys/stat.h`, `sys/types.h`, `unistd.h`)**
-    
+
     - Used for reading requested files and handling file metadata.
     - `open()`, `read()`, `close()`, `fstat()`.
 - **Multithreading (`pthread.h`)**
-    
+
     - Handles multiple client requests simultaneously.
     - `pthread_create()`, `pthread_detach()`.
 - **String Manipulation (`string.h`, `ctype.h`)**
-    
+
     - Used for parsing HTTP requests and handling filenames.
     - `strcpy()`, `strchr()`, `strcasecmp()`, `strlen()`, `memcpy()`.
 - **Regular Expressions (`regex.h`)**
-    
+
     - Extracts file paths from HTTP GET requests.
     - `regcomp()`, `regexec()`, `regfree()`.
 - **Memory Management (`stdlib.h`)**
-    
+
     - Allocates and frees memory dynamically.
     - `malloc()`, `free()`.
 - **Error Handling (`errno.h`, `stdio.h`)**
-    
+
     - Used for logging errors and debugging.
     - `perror()`, `printf()`.
 <br/>
@@ -848,7 +848,7 @@ Now as promised, here is a list of tools we used in the entire code base and wha
 <br/>
 And that’s a wrap! You just built your own HTTP server from scratch in C. Pretty cool, right? Now you’ve got something solid to show off.
 
-I hope this blog was genuinely useful and helped you understand the logic behind the code rather than just copy-pasting. If you have any questions, check out the resources I used while writing this. 
+I hope this blog was genuinely useful and helped you understand the logic behind the code rather than just copy-pasting. If you have any questions, check out the resources I used while writing this.
 
 You can also reach out to me on [X (formerly Twitter)](https://x.com/puangg59).
 <br/>
@@ -858,7 +858,7 @@ If you want to dive into the code, you can check out the GitHub repository here:
 
 <br/>
 
---- 
+---
 ## Resources Used
 
 <div className="quote">
