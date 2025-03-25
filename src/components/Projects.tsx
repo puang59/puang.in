@@ -29,6 +29,39 @@ export const projectList = [
     technologies: ["python"],
     link: "https://github.com/puang59/VentBot-Host",
   },
+  {
+    title: "gooseboard",
+    description:
+      "a minimal whiteboard application for quick sketching and collaboration",
+    technologies: ["typescript"],
+    link: "https://gooseboard.puang.in",
+  },
+  {
+    title: "xtoxic",
+    description:
+      "a tool that analyzes your tweets to determine your toxicity level",
+    technologies: ["typescript"],
+    link: "https://xtoxic.puang.in",
+  },
+  {
+    title: "nekotv",
+    description: "an anime streaming platform with a modern interface",
+    technologies: ["typescript"],
+    link: "https://nekotv.live",
+  },
+  {
+    title: "hearmeout",
+    description: "a platform for anonymous sharing and communication",
+    technologies: ["typescript"],
+    link: "https://vent.lol",
+  },
+  {
+    title: "devknit-landing",
+    description:
+      "a community platform for developers to connect and share knowledge",
+    technologies: ["typescript"],
+    link: "https://devknit.com",
+  },
 ];
 
 export function Projects() {

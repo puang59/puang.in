@@ -11,13 +11,26 @@
             "id": "ac4b7d9b247d731c",
             "type": "leaf",
             "state": {
-              "type": "empty",
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.8.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.8.7"
+            }
+          },
+          {
+            "id": "ebcdd1e6083be08e",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
               "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -159,7 +172,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ac4b7d9b247d731c",
+  "active": "ebcdd1e6083be08e",
   "lastOpenFiles": [
     "http-server.md",
     "retro-website.md",
