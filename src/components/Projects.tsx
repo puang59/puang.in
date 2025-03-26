@@ -2,34 +2,6 @@ import { ArrowUpRight } from "lucide-react";
 
 export const projectList = [
   {
-    title: "fileease",
-    description:
-      "a cli tool to sort files by keywords and extensions, keeping your workspace tidy",
-    technologies: ["python"],
-    link: "https://github.com/puang59/FileEase",
-  },
-  {
-    title: "wallgrab",
-    description:
-      "a shell script to download high quality wallpapers directly from your terminal",
-    technologies: ["shell"],
-    link: "https://github.com/puang59/wallgrab",
-  },
-  {
-    title: "roboart",
-    description:
-      "a basic random avatar generator which generates avatar in 4 different sets when hash is provided",
-    technologies: ["python"],
-    link: "https://github.com/puang59/roboart",
-  },
-  {
-    title: "ventbot",
-    description:
-      "a discord bot designed to facilitate anonymous communication between members",
-    technologies: ["python"],
-    link: "https://github.com/puang59/VentBot-Host",
-  },
-  {
     title: "gooseboard",
     description:
       "a minimal whiteboard application for quick sketching and collaboration",
@@ -61,6 +33,34 @@ export const projectList = [
       "a community platform for developers to connect and share knowledge",
     technologies: ["typescript"],
     link: "https://devknit.com",
+  },
+  {
+    title: "fileease",
+    description:
+      "a cli tool to sort files by keywords and extensions, keeping your workspace tidy",
+    technologies: ["python"],
+    link: "https://github.com/puang59/FileEase",
+  },
+  {
+    title: "wallgrab",
+    description:
+      "a shell script to download high quality wallpapers directly from your terminal",
+    technologies: ["shell"],
+    link: "https://github.com/puang59/wallgrab",
+  },
+  {
+    title: "roboart",
+    description:
+      "a basic random avatar generator which generates avatar in 4 different sets when hash is provided",
+    technologies: ["python"],
+    link: "https://github.com/puang59/roboart",
+  },
+  {
+    title: "ventbot",
+    description:
+      "a discord bot designed to facilitate anonymous communication between members",
+    technologies: ["python"],
+    link: "https://github.com/puang59/VentBot-Host",
   },
 ];
 
